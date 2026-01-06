@@ -1,9 +1,11 @@
-import { ConsoleLog, ConsoleError } from '../../utils/utils.logger.js';
-import Database from '../modules.connection.js';
-import bcrypt from 'bcrypt';
+import { ConsoleLog, ConsoleError } from '../lib/logger.js';
+import Database from '../lib/connection.js';
+import userSchema from '../Model/StaticUser.js';
 import dotenv from 'dotenv';
+import path from 'path';
+import __dirname from '../lib/dirname.js';
 
-dotenv.config();
+dotenv.config({path: path.join(__dirname, 'config', '.env')})
 
 const db = new Database();
 const log = false;
@@ -15,20 +17,19 @@ async function Register(req, res) {
   if (!req.body) {
     return res.status(400).json({ error: "Register Failed Parameter is Empty" });
   }
-
   try {
-
     const collection = await db.Collection();
-    const doc = await userSchema(req)
+    const doc = await userSchema(req, salt);
     await collection.insertOne(doc);
+    
     ConsoleLog('[ USER REGISTERED SUCCESSFULLY ]', log);
     return res.status(200).json({ success: true, message: 'Register Successful' });
 
   } catch (error) {
     if (error.code === 11000) {
-      ConsoleError(`[ FAILED REGISTER ACCOUNT ]: ${error.message}`, log);
       return res.status(409).json({ error: "There was an error with your registration" })
     }
+    ConsoleError(`[ FAILED REGISTER ACCOUNT ]: ${error.message}`, log);
     return res.status(500).json({ error: 'Internal Server Error' });
   } finally {
     await db.Close();

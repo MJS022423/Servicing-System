@@ -1,7 +1,6 @@
-import { ConsoleLog, ConsoleError } from '../../utils/utils.logger.js';
-import { generateKey } from './Auth.js';
-
-import Database from '../modules.connection.js';
+import { ConsoleLog, ConsoleError } from './../lib/logger.js';
+import { generateKey } from './AuthJWT.js';
+import Database from '../lib/connection.js';
 import bcrypt from 'bcrypt';
 
 const db = new Database();
@@ -15,13 +14,10 @@ async function Login(req, res) {
 
   try {
 
-    const collection = await db.Collection('users');
-    const { username, password } = req.body;
-    
-    console.log(username, password);
+    const collection = await db.Collection();
+    const { username, password } = req.body;    
     const user = await collection.findOne({ Username : username });
 
-    console.log(user)
     if (!user) {
       return res.status(401).json({ error: "Account not found" });
     }
