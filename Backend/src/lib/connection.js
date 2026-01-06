@@ -1,15 +1,15 @@
 import { MongoClient } from 'mongodb';
-import { ConsoleLog, ConsoleError, Logger } from '../utils/utils.logger.js';
+import { ConsoleLog, ConsoleError } from './logger.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 class Database {
-  constructor(online = true) {
+  constructor(online = false) {
 
     this.localconnectionString = process.env.localhostUrl || 'mongodb://localhost:27017';
     this.atlasconnectionString = process.env.AtlasUrl || 'mongodb://localhost:27017';
-    this.DBname = process.env.DB_name || 'GlamURe';
+    this.DBname = process.env.DB_name;
     this.Log = false;
 
     const url = online ? this.atlasconnectionString : this.localconnectionString;
@@ -29,7 +29,7 @@ class Database {
     }
   }
 
-  async Collection(collection = process.env.DB_collection_name || 'posts') {
+  async Collection(collection = process.env.DB_collection_name) {
     if (collection) {
       try {
         const db = await this.Connection();
