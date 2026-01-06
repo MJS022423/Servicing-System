@@ -7,8 +7,6 @@ Frontend/yarn-error.log*
 Frontend/pnpm-debug.log*
 Frontend/lerna-debug.log*
 
-Frontend/package.json
-Frontend/package-lock.json
 Frontend/node_modules
 Frontend/dist
 Frontend/dist-ssr
@@ -27,10 +25,9 @@ Frontend/*.sw?
 
 #Application configuration
 Backend/config/
+Backend/config/.env
 
 
 # #Node Package
-Backend/package-lock.json
-Backend/package.json
 
 Backend/node_modules
