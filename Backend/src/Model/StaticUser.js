@@ -1,17 +1,14 @@
-import bcrypt from 'bcrypt';
-
-async function userSchema(
+export async function userSchema(
   username,
   email,
   password,
   salt
 ) {
   
-  const hashedpassword = await bcrypt.hash(password, salt);
   return {
     Username: `${username}`,
     Email: `${email}`,
-    Password: `${hashedpassword}`,
+    Password: `${password}`,
     DisplayName: null,
     Gender: null,
     Role: 'user',
@@ -19,4 +16,3 @@ async function userSchema(
   }
 };
 
-export default userSchema;
