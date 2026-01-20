@@ -1,8 +1,10 @@
 import { MongoClient } from 'mongodb';
 import { ConsoleLog, ConsoleError } from './logger.js';
 import dotenv from 'dotenv';
+import __dirname from './dirname.js';
+import path from 'path'
 
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, 'config', '.env') })
 
 const collection_list = [
   process.env.DBCollection1,
