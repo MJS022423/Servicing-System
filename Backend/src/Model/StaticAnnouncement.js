@@ -1,4 +1,4 @@
-function AnnouncementSchema(
+export function AnnouncementSchema(
   Title,
   Content,
   Createdby
@@ -11,4 +11,3 @@ function AnnouncementSchema(
   }
 }
 
-export default AnnouncementSchema;

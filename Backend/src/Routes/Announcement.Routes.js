@@ -1,10 +1,10 @@
 import express from 'express';
-import PostAnnounce from '../Service/Announcement/PostAnnouncement.js';
-import DisplayAnnounce from '../Service/Announcement/DisplayAnnouncement.js';
+import { PostAnnouncement, AnnouncementList } from '../Controller/Announcement.controller.js';
+import { authMiddleware } from '../middleware/Auth.middleware.js';
 
 const AnnouncementRouter = express.Router();
 
-AnnouncementRouter.post('/v1/PostAnnouncement',PostAnnounce);
-AnnouncementRouter.get('/v1/DisplayAnnouncement', DisplayAnnounce);
+AnnouncementRouter.post('/v1/PostAnnouncement', authMiddleware, PostAnnouncement);
+AnnouncementRouter.get('/v1/DisplayAnnouncement', authMiddleware, AnnouncementList);
 
 export default AnnouncementRouter;
